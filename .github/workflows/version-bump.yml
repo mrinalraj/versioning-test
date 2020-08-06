@@ -52,7 +52,7 @@ jobs:
               uses: heinrichreimer/github-changelog-generator-action@v2.1.1
               with:
                   token: ${{ secrets.COMMIT_SECRET_KEY }}
-                  output: 'CHANGELOG.md'
+                  output: 'docs/CHANGELOG.md'
                   issues: 'true'
                   issuesWoLabels: 'true'
                   pullRequests: 'true'
@@ -62,6 +62,6 @@ jobs:
             - name: Push and Tag Version
               run: |
                   git add .
-                  git commit -m "generate changelog"
+                  git commit -m "generate changelog file"
                   git push "https://$GITHUB_ACTOR:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY"
                   git push --tags "https://$GITHUB_ACTOR:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY"
