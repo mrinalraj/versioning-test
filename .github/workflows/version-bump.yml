@@ -1,0 +1,67 @@
+name: Android Version Bump
+
+on:
+    push:
+        branches:
+            - 'master'
+
+jobs:
+    bump:
+        name: Run Version Bump
+        runs-on: ubuntu-latest
+
+        strategy:
+            matrix:
+                node-version: [12.x]
+
+        steps:
+            # git checkout project
+            - name: Checkout repository
+            - uses: actions/checkout@v2
+
+            # setup node to be used
+            - name: Set up Node.js ${{ matrix.node-version }}
+              uses: actions/setup-node@v1
+              with:
+                  node-version: ${{ matrix.node-version }}
+
+            - name: Setup GIT
+              run: |
+                  git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+                  git config user.name "$GITHUB_ACTOR"
+
+            - name: Major Bump
+              env:
+                  GITHUB_TOKEN: ${{ secrets.COMMIT_SECRET_KEY }}
+              if: (contains(github.event.head_commit.message, 'breaking-change') || contains(github.event.head_commit.message, 'major')) == true
+              run: npm version major
+
+            - name: Minor Bump
+              env:
+                  GITHUB_TOKEN: ${{ secrets.COMMIT_SECRET_KEY }}
+              if: (contains(github.event.head_commit.message, 'feature') || contains(github.event.head_commit.message, 'minor')) == true
+              run: npm version minor
+
+            - name: Patch Bump
+              env:
+                  GITHUB_TOKEN: ${{ secrets.COMMIT_SECRET_KEY }}
+              if: (contains(github.event.head_commit.message, 'hotfix') || contains(github.event.head_commit.message, 'patch')) == true
+              run: npm version patch
+
+            - name: Generate Changelog
+              uses: heinrichreimer/github-changelog-generator-action@v2.1.1
+              with:
+                  token: ${{ secrets.COMMIT_SECRET_KEY }}
+                  output: 'CHANGELOG.md'
+                  issues: 'true'
+                  issuesWoLabels: 'true'
+                  pullRequests: 'true'
+                  prWoLabels: 'true'
+                  simpleList: 'true'
+
+            - name: Push and Tag Version
+              run: |
+                  git add .
+                  git commit --amend
+                  git push "https://$GITHUB_ACTOR:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY"
+                  git push --tags "https://$GITHUB_ACTOR:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY"
