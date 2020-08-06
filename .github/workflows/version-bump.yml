@@ -1,4 +1,4 @@
-name: Android Version Bump
+name: Version Bump
 
 on:
     push:
@@ -34,19 +34,19 @@ jobs:
               env:
                   GITHUB_TOKEN: ${{ secrets.COMMIT_SECRET_KEY }}
               if: (contains(github.event.head_commit.message, 'breaking-change') || contains(github.event.head_commit.message, 'major')) == true
-              run: npm version major
+              run: npm --no-git-tag-version version major
 
             - name: Minor Bump
               env:
                   GITHUB_TOKEN: ${{ secrets.COMMIT_SECRET_KEY }}
               if: (contains(github.event.head_commit.message, 'feature') || contains(github.event.head_commit.message, 'minor')) == true
-              run: npm version minor
+              run: npm --no-git-tag-version version minor
 
             - name: Patch Bump
               env:
                   GITHUB_TOKEN: ${{ secrets.COMMIT_SECRET_KEY }}
               if: (contains(github.event.head_commit.message, 'hotfix') || contains(github.event.head_commit.message, 'patch')) == true
-              run: npm version patch
+              run: npm --no-git-tag-version version patch
 
             - name: Generate Changelog
               uses: heinrichreimer/github-changelog-generator-action@v2.1.1
@@ -62,6 +62,6 @@ jobs:
             - name: Push and Tag Version
               run: |
                   git add .
-                  git commit --amend
+                  git commit -m "generate changelog"
                   git push "https://$GITHUB_ACTOR:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY"
                   git push --tags "https://$GITHUB_ACTOR:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY"
