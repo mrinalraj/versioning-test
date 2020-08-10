@@ -48,13 +48,6 @@ jobs:
               if: (contains(github.event.head_commit.message, 'hotfix') || contains(github.event.head_commit.message, 'patch')) == true
               run: npm version patch
 
-            - name: Pull Requests body
-              run: echo "$COMMIT"
-              env:
-                  GITHUB_TOKEN: ${{ secrets.COMMIT_SECRET_KEY }}
-                  COMMIT: ${{ github.event.head_commit }}
-                  COMMIT_MESSAGE: ${{ github.event.head_commit.title }}
-
             - name: Dump git context
               run: echo "$GITHUB_CONTEXT"
 
