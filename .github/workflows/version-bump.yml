@@ -54,10 +54,10 @@ jobs:
                   token: ${{ secrets.COMMIT_SECRET_KEY }}
                   output: 'CHANGELOG.md'
                   issues: 'true'
-                  issuesWoLabels: 'true'
                   pullRequests: 'true'
-                  prWoLabels: 'true'
                   simpleList: 'true'
+                  author: true
+                  usernamesAsGithubLogins: true
 
             - name: Push and Tag Version
               run: |
