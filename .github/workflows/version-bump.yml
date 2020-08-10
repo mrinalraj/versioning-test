@@ -52,7 +52,7 @@ jobs:
               uses: heinrichreimer/github-changelog-generator-action@v2.1.1
               with:
                   token: ${{ secrets.COMMIT_SECRET_KEY }}
-                  output: 'CHANGELOG.md'
+                  base: 'CHANGELOG.md'
                   issues: 'true'
                   issuesWoLabels: 'true'
                   pullRequests: 'true'
