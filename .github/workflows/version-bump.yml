@@ -48,10 +48,6 @@ jobs:
               if: (contains(github.event.head_commit.message, 'hotfix') || contains(github.event.head_commit.message, 'patch')) == true
               run: npm version patch
 
-			- name: Push new tag
-              run: |
-                  git push --tags "https://$GITHUB_ACTOR:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY"
-
             - name: Generate Changelog
               uses: heinrichreimer/github-changelog-generator-action@v2.1.1
               with:
