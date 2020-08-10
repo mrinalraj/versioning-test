@@ -1,5 +1,17 @@
 # Changelog
 
+## [v2.8.0](https://github.com/mrinalraj/versioning-test/tree/v2.8.0) (2020-08-10)
+
+- try amend again [\#20](https://github.com/mrinalraj/versioning-test/pull/20) ([mrinalraj](https://github.com/mrinalraj))
+
+## [v2.7.0](https://github.com/mrinalraj/versioning-test/tree/v2.7.0) (2020-08-10)
+
+- Feature/fie change [\#19](https://github.com/mrinalraj/versioning-test/pull/19) ([mrinalraj](https://github.com/mrinalraj))
+
+## [v2.6.0](https://github.com/mrinalraj/versioning-test/tree/v2.6.0) (2020-08-10)
+
+- feature/create new file [\#18](https://github.com/mrinalraj/versioning-test/pull/18) ([mrinalraj](https://github.com/mrinalraj))
+
 ## [v2.5.1](https://github.com/mrinalraj/versioning-test/tree/v2.5.1) (2020-08-10)
 
 - hotfix / final run action [\#17](https://github.com/mrinalraj/versioning-test/pull/17) ([mrinalraj](https://github.com/mrinalraj))
