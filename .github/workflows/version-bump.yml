@@ -48,16 +48,28 @@ jobs:
               if: (contains(github.event.head_commit.message, 'hotfix') || contains(github.event.head_commit.message, 'patch')) == true
               run: npm version patch
 
+            - name: Pull Requests body
+              run: echo $PULL_REQUEST_NUMBER $PULL_REQUEST_TITLE $PULL_REQUEST_AUTHOR_NAME $PULL_REQUEST_URL $PULL_REQUEST_BODY
+              env:
+                  PULL_REQUEST_NUMBER: ${{ github.event.pull_request.number }}
+                  PULL_REQUEST_TITLE: ${{ github.event.pull_request.title }}
+                  PULL_REQUEST_AUTHOR_NAME: ${{ github.event.pull_request.user.login }}
+                  PULL_REQUEST_AUTHOR_ICON_URL: ${{ github.event.pull_request.user.avatar_url }}
+                  PULL_REQUEST_URL: ${{ github.event.pull_request.html_url }}
+                  PULL_REQUEST_BODY: ${{ github.event.pull_request.body }}
+
             - name: Generate Changelog
               uses: heinrichreimer/github-changelog-generator-action@v2.1.1
               with:
                   token: ${{ secrets.COMMIT_SECRET_KEY }}
                   output: 'CHANGELOG.md'
                   issues: 'true'
+                  issuesWoLabels: 'true'
                   pullRequests: 'true'
+                  prWoLabels: 'true'
                   simpleList: 'true'
-                  author: true
-                  usernamesAsGithubLogins: true
+                  author: 'true'
+                  usernamesAsGithubLogins: 'true'
 
             - name: Push and Tag Version
               run: |
