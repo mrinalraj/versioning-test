@@ -51,6 +51,7 @@ jobs:
             - name: Pull Requests body
               run: echo $PULL_REQUEST_NUMBER $PULL_REQUEST_TITLE $PULL_REQUEST_AUTHOR_NAME $PULL_REQUEST_URL $PULL_REQUEST_BODY
               env:
+                  GITHUB_TOKEN: ${{ secrets.COMMIT_SECRET_KEY }}
                   PULL_REQUEST_NUMBER: ${{ github.event.pull_request.number }}
                   PULL_REQUEST_TITLE: ${{ github.event.pull_request.title }}
                   PULL_REQUEST_AUTHOR_NAME: ${{ github.event.pull_request.user.login }}
