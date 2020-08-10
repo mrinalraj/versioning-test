@@ -1,5 +1,9 @@
 # Changelog
 
+## [v2.2.0](https://github.com/mrinalraj/versioning-test/tree/v2.2.0) (2020-08-10)
+
+- Feature/print pr [\#9](https://github.com/mrinalraj/versioning-test/pull/9) (@mrinalraj)
+
 ## [v2.1.4](https://github.com/mrinalraj/versioning-test/tree/v2.1.4) (2020-08-10)
 
 - Hotfix/tag gen [\#8](https://github.com/mrinalraj/versioning-test/pull/8) (@mrinalraj)
