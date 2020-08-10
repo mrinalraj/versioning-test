@@ -1,15 +1,10 @@
 # Changelog
 
+## [v2.1.2](https://github.com/mrinalraj/versioning-test/tree/v2.1.2) (2020-08-10)
+
 ## [v2.1.1](https://github.com/mrinalraj/versioning-test/tree/v2.1.1) (2020-08-10)
 
-- hotfix/tag-gen [\#5](https://github.com/mrinalraj/versioning-test/pull/5)
-
 ## [v2.1.0](https://github.com/mrinalraj/versioning-test/tree/v2.1.0) (2020-08-10)
-
-- Feature/changelog folder [\#4](https://github.com/mrinalraj/versioning-test/pull/4)
-- Feature/changelog folder [\#3](https://github.com/mrinalraj/versioning-test/pull/3)
-- feature - remove files [\#2](https://github.com/mrinalraj/versioning-test/pull/2)
-- feature-app [\#1](https://github.com/mrinalraj/versioning-test/pull/1)
 
 
 
