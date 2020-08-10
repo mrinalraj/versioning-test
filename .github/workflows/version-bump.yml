@@ -49,15 +49,14 @@ jobs:
               run: npm version patch
 
             - name: Pull Requests body
-              run: echo $PULL_REQUEST_NUMBER $PULL_REQUEST_TITLE $PULL_REQUEST_AUTHOR_NAME $PULL_REQUEST_URL $PULL_REQUEST_BODY
+              run: echo "$COMMIT"
               env:
                   GITHUB_TOKEN: ${{ secrets.COMMIT_SECRET_KEY }}
-                  PULL_REQUEST_NUMBER: ${{ github.event.pull_request.number }}
-                  PULL_REQUEST_TITLE: ${{ github.event.pull_request.title }}
-                  PULL_REQUEST_AUTHOR_NAME: ${{ github.event.pull_request.user.login }}
-                  PULL_REQUEST_AUTHOR_ICON_URL: ${{ github.event.pull_request.user.avatar_url }}
-                  PULL_REQUEST_URL: ${{ github.event.pull_request.html_url }}
-                  PULL_REQUEST_BODY: ${{ github.event.pull_request.body }}
+                  COMMIT: ${{ github.event.head_commit }}
+                  COMMIT_MESSAGE: ${{ github.event.head_commit.title }}
+
+            - name: Dump git context
+              run: echo "$GITHUB_CONTEXT"
 
             - name: Generate Changelog
               uses: heinrichreimer/github-changelog-generator-action@v2.1.1
