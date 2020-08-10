@@ -63,6 +63,6 @@ jobs:
             - name: Push and Tag Version
               run: |
                   git add .
-                  git commit --amend
+                  git commit --amend --no-edit
                   git push "https://$GITHUB_ACTOR:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY"
                   git push --tags "https://$GITHUB_ACTOR:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY"
