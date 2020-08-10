@@ -1,8 +1,5 @@
 {
 	"name": "versioning-test",
 	"version": "2.7.0",
-	"private": true,
-	"scripts": {
-		"postversion": "git push && git push --tags"
-	}
+	"private": true
 }
