@@ -30,43 +30,68 @@ jobs:
                   git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
                   git config user.name "$GITHUB_ACTOR"
 
-            - name: Major Bump
-              env:
-                  GITHUB_TOKEN: ${{ secrets.COMMIT_SECRET_KEY }}
-              if: (contains(github.event.head_commit.message, 'breaking-change') || contains(github.event.head_commit.message, 'major')) == true
-              run: npm version major
+            # - name: Major Bump
+            #   env:
+            #       GITHUB_TOKEN: ${{ secrets.COMMIT_SECRET_KEY }}
+            #   if: (contains(github.event.head_commit.message, 'breaking-change') || contains(github.event.head_commit.message, 'major')) == true
+            #   run: npm version major
 
-            - name: Minor Bump
-              env:
-                  GITHUB_TOKEN: ${{ secrets.COMMIT_SECRET_KEY }}
-              if: (contains(github.event.head_commit.message, 'feature') || contains(github.event.head_commit.message, 'minor')) == true
-              run: npm version minor
+            # - name: Minor Bump
+            #   env:
+            #       GITHUB_TOKEN: ${{ secrets.COMMIT_SECRET_KEY }}
+            #   if: (contains(github.event.head_commit.message, 'feature') || contains(github.event.head_commit.message, 'minor')) == true
+            #   run: npm version minor
 
-            - name: Patch Bump
-              env:
-                  GITHUB_TOKEN: ${{ secrets.COMMIT_SECRET_KEY }}
-              if: (contains(github.event.head_commit.message, 'hotfix') || contains(github.event.head_commit.message, 'patch')) == true
-              run: npm version patch
+            # - name: Patch Bump
+            #   env:
+            #       GITHUB_TOKEN: ${{ secrets.COMMIT_SECRET_KEY }}
+            #   if: (contains(github.event.head_commit.message, 'hotfix') || contains(github.event.head_commit.message, 'patch')) == true
+            #   run: npm version patch
 
-            - name: Dump git context
+            # - name: Dump git context
+            #   run: echo "$GITHUB_CONTEXT"
+
+            # - name: Generate Changelog
+            #   uses: heinrichreimer/github-changelog-generator-action@v2.1.1
+            #   with:
+            #       token: ${{ secrets.COMMIT_SECRET_KEY }}
+            #       output: 'CHANGELOG.md'
+            #       issues: 'true'
+            #       issuesWoLabels: 'true'
+            #       pullRequests: 'true'
+            #       prWoLabels: 'true'
+            #       simpleList: 'true'
+            #       author: 'true'
+            #       usernamesAsGithubLogins: 'true'
+
+            # - name: Push and Tag Version
+            #   run: |
+            #       git add .
+            #       git commit -m "generate changelog file"
+            #       git push "https://$GITHUB_ACTOR:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY"
+            #       git push --tags "https://$GITHUB_ACTOR:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY"
+
+            - name: Dump GitHub context
+              env:
+                  GITHUB_CONTEXT: ${{ toJson(github) }}
               run: echo "$GITHUB_CONTEXT"
-
-            - name: Generate Changelog
-              uses: heinrichreimer/github-changelog-generator-action@v2.1.1
-              with:
-                  token: ${{ secrets.COMMIT_SECRET_KEY }}
-                  output: 'CHANGELOG.md'
-                  issues: 'true'
-                  issuesWoLabels: 'true'
-                  pullRequests: 'true'
-                  prWoLabels: 'true'
-                  simpleList: 'true'
-                  author: 'true'
-                  usernamesAsGithubLogins: 'true'
-
-            - name: Push and Tag Version
-              run: |
-                  git add .
-                  git commit -m "generate changelog file"
-                  git push "https://$GITHUB_ACTOR:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY"
-                  git push --tags "https://$GITHUB_ACTOR:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY"
+            - name: Dump job context
+              env:
+                  JOB_CONTEXT: ${{ toJson(job) }}
+              run: echo "$JOB_CONTEXT"
+            - name: Dump steps context
+              env:
+                  STEPS_CONTEXT: ${{ toJson(steps) }}
+              run: echo "$STEPS_CONTEXT"
+            - name: Dump runner context
+              env:
+                  RUNNER_CONTEXT: ${{ toJson(runner) }}
+              run: echo "$RUNNER_CONTEXT"
+            - name: Dump strategy context
+              env:
+                  STRATEGY_CONTEXT: ${{ toJson(strategy) }}
+              run: echo "$STRATEGY_CONTEXT"
+            - name: Dump matrix context
+              env:
+                  MATRIX_CONTEXT: ${{ toJson(matrix) }}
+              run: echo "$MATRIX_CONTEXT"
