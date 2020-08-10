@@ -25,32 +25,38 @@ jobs:
               with:
                   node-version: ${{ matrix.node-version }}
 
+            # setup git
             - name: Setup GIT
               run: |
                   git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
                   git config user.name "$GITHUB_ACTOR"
 
+            # bump major version if the commit message has keys `breaking-change` or `major`
             - name: Major Bump
               env:
                   GITHUB_TOKEN: ${{ secrets.COMMIT_SECRET_KEY }}
               if: (contains(github.event.head_commit.message, 'breaking-change') || contains(github.event.head_commit.message, 'major')) == true
               run: npm version major
 
+            # bump minor version if the commit message has keys `feature` or `minor`
             - name: Minor Bump
               env:
                   GITHUB_TOKEN: ${{ secrets.COMMIT_SECRET_KEY }}
               if: (contains(github.event.head_commit.message, 'feature') || contains(github.event.head_commit.message, 'minor')) == true
               run: npm version minor
 
+            # bump major version if the commit message has keys `hotfix`, `fix` or `patch`
             - name: Patch Bump
               env:
                   GITHUB_TOKEN: ${{ secrets.COMMIT_SECRET_KEY }}
-              if: (contains(github.event.head_commit.message, 'hotfix') || contains(github.event.head_commit.message, 'patch')) == true
+              if: (contains(github.event.head_commit.message, 'hotfix') || contains(github.event.head_commit.message, 'fix') || contains(github.event.head_commit.message, 'patch')) == true
               run: npm version patch
 
+            # Push new version tag, this is required for the next step to generate changelog based on this tagname
             - name: Push tags
               run: git push --tags
 
+            # this step generates changelog and writes to file `output`
             - name: Generate Changelog
               uses: heinrichreimer/github-changelog-generator-action@v2.1.1
               with:
@@ -63,7 +69,8 @@ jobs:
                   simpleList: 'true'
                   author: 'true'
 
-            - name: Push and Tag Version
+            # Amend the changelog file in the last commit and push to git
+            - name: Push commit to git
               run: |
                   git add .
                   git commit --amend --no-edit
