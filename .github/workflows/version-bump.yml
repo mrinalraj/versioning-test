@@ -47,7 +47,7 @@ jobs:
                   GITHUB_TOKEN: ${{ secrets.COMMIT_SECRET_KEY }}
               if: (contains(github.event.head_commit.message, 'hotfix') || contains(github.event.head_commit.message, 'patch')) == true
               run: npm version patch
-
+			  
 			- name: Push new tag
               run: |
                   git add .
