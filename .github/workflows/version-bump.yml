@@ -34,25 +34,25 @@ jobs:
               env:
                   GITHUB_TOKEN: ${{ secrets.COMMIT_SECRET_KEY }}
               if: (contains(github.event.head_commit.message, 'breaking-change') || contains(github.event.head_commit.message, 'major')) == true
-              run: npm --no-git-tag-version version major
+              run: npm version major
 
             - name: Minor Bump
               env:
                   GITHUB_TOKEN: ${{ secrets.COMMIT_SECRET_KEY }}
               if: (contains(github.event.head_commit.message, 'feature') || contains(github.event.head_commit.message, 'minor')) == true
-              run: npm --no-git-tag-version version minor
+              run: npm version minor
 
             - name: Patch Bump
               env:
                   GITHUB_TOKEN: ${{ secrets.COMMIT_SECRET_KEY }}
               if: (contains(github.event.head_commit.message, 'hotfix') || contains(github.event.head_commit.message, 'patch')) == true
-              run: npm --no-git-tag-version version patch
+              run: npm version patch
 
             - name: Generate Changelog
               uses: heinrichreimer/github-changelog-generator-action@v2.1.1
               with:
                   token: ${{ secrets.COMMIT_SECRET_KEY }}
-                  base: 'CHANGELOG.md'
+                  output: 'CHANGELOG.md'
                   issues: 'true'
                   issuesWoLabels: 'true'
                   pullRequests: 'true'
